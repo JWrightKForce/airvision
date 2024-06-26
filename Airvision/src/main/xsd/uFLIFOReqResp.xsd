@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/Airserve/SharedResources/XMLSchemas/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/Airserve/SharedResources/XMLSchemas/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+
+<xs:element name="root">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="FlightLegs" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OperationalFlightSegments">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="FlightNumber" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="EstimatedDepartureTime" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="DepartureGate" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="EstimatedDepartureDelayMinutes" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="EstimatedArrivalDelayMinutes" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="Equipment" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="Model" minOccurs="0">
+                                                    <xs:complexType>
+                                                        <xs:sequence>
+                                                            <xs:element name="Key" type="xs:string" minOccurs="0"/>
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="TailNumber" type="xs:string" minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="DepartureAirport" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="IATACode" type="xs:string" minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="ArrivalAirport" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="IATACode" type="xs:string" minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="OperatingAirline" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="IATACode" type="xs:string" minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="FlightStatuses" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="StatusType" type="xs:string" minOccurs="0"/>
+                                                <xs:element name="Description" type="xs:string" minOccurs="0"/>
+                                                <xs:element name="Code" type="xs:string" minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Error" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Code" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Description" type="xs:string" minOccurs="0"/>
+                        <xs:element name="ErrorType" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Text" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Severity" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+</xs:schema>
+
+
+

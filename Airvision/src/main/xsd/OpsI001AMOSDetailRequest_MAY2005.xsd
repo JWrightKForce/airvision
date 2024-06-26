@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:OPSI001="http://airserv.com/Ops-I-001/AMOSDetailRequest/MAY2005"
+	 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 targetNamespace="http://airserv.com/Ops-I-001/AMOSDetailRequest/MAY2005"
+	 version="1.1.0"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			<xs:description/>
+			<xs:AirServRelease>10.1</xs:AirServRelease>
+			<xs:title>Ops-I-001 AMOS Detail Request</xs:title>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AMOSFlightDetailsRequest">
+		<xs:complexType>
+			<xs:attribute name="AirlineCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the airline that is requesting the food service to be boarded</xs:description>
+						<xs:example>SA</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FlightNumber" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The scheduled flight number of the serving leg that is being forecasted for meal ordering purposes</xs:description>
+						<xs:example>1013</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="OperationalSuffix">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The 1 character designator for a flight number that is modified operationally.  If no operational suffix is needed, this element is blank or not included.</xs:description>
+						<xs:example>A</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FlightDate" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The local scheduled departure date of the serving flight leg in the format YYYY-MM-DD</xs:description>
+						<xs:example>2003-12-31</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="OrigFlightDate">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The local scheduled departure date of the first leg of a flight in the format YYYY-MM-DD</xs:description>
+						<xs:example>2003-12-31</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="DepartureStationCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is departing from</xs:description>
+						<xs:example>DFW</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ArrivalStationCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is arriving</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="QueryPeriod" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Numerical code representing the specific query period this forecast is being made for.  Applies for both pre and post-departure requests.  The code may not match the number of hours or minutes prior to departure, so you must understand what these codes actually refer to.</xs:description>
+						<xs:example>24</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingAirlineCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the airline that is requesting the food service to be boarded</xs:description>
+						<xs:example>SA</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFlightNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The scheduled flight number of the boarding leg</xs:description>
+						<xs:example>1013</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingOperationalSuffix">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The 1 character designator for a flight number that is modified operationally.  If no operational suffix is needed, this element is blank or not included.</xs:description>
+						<xs:example>A</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFlightDate">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The local scheduled departure date of the boarding flight leg in the format YYYY-MM-DD</xs:description>
+						<xs:example>2003-12-31</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:date"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingDepartureStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is departing from</xs:description>
+						<xs:example>DFW</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingArrivalStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the boarding flight leg is arriving</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilityStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Station code</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilityTypeCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Type code</xs:description>
+						<xs:example>C</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilitySequenceNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Sequence Number</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

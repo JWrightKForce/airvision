@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:OPSI002="http://airserv.com/Ops-I-002/AMOSDetailResponse/MAY2005"
+	 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 targetNamespace="http://airserv.com/Ops-I-002/AMOSDetailResponse/MAY2005"
+	 version="1.1.1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			<xs:description/>
+			<xs:example/>
+			<xs:AirServRelease>10.1</xs:AirServRelease>
+			<xs:title>Ops-I-002 AMOS Detail Response</xs:title>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AMOSFlightDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:AircraftKey" minOccurs="0"/>
+				<xs:element ref="OPSI002:Cabin" minOccurs="0" maxOccurs="10"/>
+			</xs:sequence>
+			<xs:attribute name="AirlineCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the airline that is requesting the food service to be boarded</xs:description>
+						<xs:example>SA</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FlightNumber" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The scheduled flight number of the serving leg that is being forecasted for meal ordering purposes</xs:description>
+						<xs:example>1013</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="OperationalSuffix">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The 1 character designator for a flight number that is modified operationally.  If no operational suffix is needed, this element is blank or not included.</xs:description>
+						<xs:example>A</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FlightDate" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The local scheduled departure date of the serving flight leg in the format YYYY-MM-DD</xs:description>
+						<xs:example>2003-12-31</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:date"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="DepartureStationCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is departing from</xs:description>
+						<xs:example>DFW</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ArrivalStationCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is arriving</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="QueryPeriod" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Numerical code representing the specific query period this forecast is being made for.  Applies for both pre and post-departure requests.  The code may not match the number of hours or minutes prior to departure, so you must understand what these codes actually refer to.  Please consult Sabre for this list of numerical codes that are specific for your airline.</xs:description>
+						<xs:example>24</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="-1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="DepartureGate">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the latest scheduled departure gate for the serving flight leg</xs:description>
+						<xs:example>G24</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FlightStatus" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The current status of the serving flight leg as reported by the host RES or DCS system.  Valid statuses include
+							Open - Flight is currently being processed by the host the flight records are active.
+							Closed - The flight records are no longer active
+							Error - Multiple error states, as enumerated in the Ops-I-002 ErrorResponse field.  The Processor reacts differently to each of these.
+							Cancel - Flight leg cancelled
+							Statuses are case insensitive.</xs:description>
+						<xs:example>OPEN</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="OPEN"/>
+						<xs:enumeration value="CLOSED"/>
+						<xs:enumeration value="ERROR"/>
+						<xs:enumeration value="CANCEL"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="CancelTime">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the date and time the serving flight leg was cancelled by the airline.  This should be the local date and time of cancellation at the boarding facility, which might be different than the time of cancellation at the serving departure station.</xs:description>
+						<xs:example>2004-10-31T10:20:00.000+02:00</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="EstimatedDepartureTime">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the latest known estimated departure date and time of the serving flight leg.  This should be the local departure date and time at the serving departure station and should be no earlier than the locally scheduled departure date and time.</xs:description>
+						<xs:example>2004-10-31T10:20:00.000-02:00</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ErrorResponse">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value that must equal one of the predefined error responses.  This response is typically provided when the flight status is either CANCEL or ERROR. For details see Notes section.</xs:description>
+						<xs:example>FLIGHT NOOP</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingAirlineCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the airline that is requesting the food service to be boarded</xs:description>
+						<xs:example>SA</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFlightNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The scheduled flight number of the boarding leg</xs:description>
+						<xs:example>1013</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingOperationalSuffix">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The 1 character designator for a flight number that is modified operationally.  If no operational suffix is needed, this element is blank or not included.</xs:description>
+						<xs:example>A</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFlightDate">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The local scheduled departure date of the boarding flight leg in the format YYYY-MM-DD</xs:description>
+						<xs:example>2003-12-31</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:date"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingDepartureStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the serving flight leg is departing from</xs:description>
+						<xs:example>DFW</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingArrivalStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The code for the scheduled airport station where the boarding flight leg is arriving</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilityStationCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Station code</xs:description>
+						<xs:example>ORD</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilityTypeCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Type code</xs:description>
+						<xs:example>C</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BoardingFacilitySequenceNumber">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The Boarding Facility Sequence Number</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AircraftKey">
+		<xs:complexType>
+			<xs:attribute name="AircraftID">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the unique aircraft identifier or registeration number currently assigned to the serving flight leg.  This value is usually displayed on the nose or tail of the aircraft.</xs:description>
+						<xs:example>N678YA</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="AircraftTypeCode">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the general family or classification of aircraft currently assigned to the serving flight leg.</xs:description>
+						<xs:example>A319</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Cabin">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>Each passenger cabin class associated with the serving flight leg must have its own Cabin element.  The maximum number of Cabin elements is limited to three (3) per serving flight leg.  Counts provided within the attributes of this element must be for the associated ClassOfServiceCode only.</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:Capacity"/>
+				<xs:element ref="OPSI002:TotalCheckedInAndAccepted"/>
+				<xs:element ref="OPSI002:SpecialMealInfo"/>
+			</xs:sequence>
+			<xs:attribute name="ClassOfServiceCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The passenger cabin class code associated with this particular cabin and food service.  These are cabin class identifiers such as F, C, Y, M, etc.  These are not fare class codes.</xs:description>
+						<xs:example>F</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Booked" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of passengers booked in this cabin class for the serving flight leg only.  The booked value must include both transit (thru) and locally boarded passengers for this leg.</xs:description>
+						<xs:example>10</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ChildCount">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of child passengers booked in this cabin class for the serving flight leg only.  The child count value must include both transit (thru) and locally boarded child passengers for this leg.</xs:description>
+						<xs:example>4</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="RevenueStandbys">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of revenue standby passengers currently placed on the wait list for the serving flight leg and cabin class.  These standby passengers have reservations on another flight but are trying to travel on this flight leg.  This count should include all such revenue standby passengers known at the time of inquiry, including GOSHO and NOREC passengers that have been placed on the standby list.  The one exception to this rule is that the count must NOT include any such passengers that are also included in the Booked count.  Also, this value must include both transit (thru) and locally boarded revenue standby passengers for this leg.</xs:description>
+						<xs:example>2</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="NonRevenueStandbys">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of non-revenue standby passengers (PADs) intending to travel on this serving flight leg and cabin class.  This count should include ALL (listed only; listed, checked-in but not accommodated; listed, checked-in and accommodated; not listed but checked in) non-revenue standby passengers known at the time of inquiry.  The one exception to this rule is that the count should NOT include any such passengers that are also included in the Booked count.  Also, this value must include both transit (thru) and locally boarded non-revenue standby passengers for this leg.</xs:description>
+						<xs:example>5</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="PositiveSpaceStandbys">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of positive space standby passengers intending to travel on this serving flight leg and cabin class.  This count should include all positive space standby passengers known at the time of inquiry.  Please NOTE that our assumption is that positive space standby passengers are NOT INCLUDED in the Booked count.  This value must include both transit (thru) and locally boarded positive space standby passengers for this leg.</xs:description>
+						<xs:example>2</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FrequentFlierTier1">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of passengers booked in this cabin class for the serving flight leg who are top-tier frequent flier members.  This count must include both transit (thru) and locally boarded passengers.  This value must always be less than or equal to the Booked count, since this figure is essentially that subset of the Booked count which are also top-tier frequent flier members.</xs:description>
+						<xs:example>3</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FrequentFlierTier2">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of passengers booked in this cabin class for the serving flight leg who are second-tier frequent flier members.  This count must include both transit (thru) and locally boarded passengers.  This value must always be less than or equal to the Booked count, since this figure is essentially that subset of the Booked count which are also second-tier frequent flier members.</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FrequentFlierTier3">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of passengers booked in this cabin class for the serving flight leg who are third-tier frequent flier members.  This count must include both transit (thru) and locally boarded passengers.  This value must always be less than or equal to the Booked count, since this figure is essentially that subset of the Booked count which are also third-tier frequent flier members.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="FrequentFlierTier4">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value indicating the number of passengers booked in this cabin class for the serving flight leg who are fourth-tier frequent flier members.  This count must include both transit (thru) and locally boarded passengers.  This value must always be less than or equal to the Booked count, since this figure is essentially that subset of the Booked count which are also fourth-tier frequent flier members.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="SupplementalMealQuantity">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Optional value for a post-departure quantity representing the number supplemental or gate-boarded meals that were loaded in order to avoid actual undersupply (passengers on-board with no catering service available to them)</xs:description>
+						<xs:example>3</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TotalCheckedInAndAccepted">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>This collection of data functions as BOTH pre and post-departure counts.  For pre-departure, the figures should represent the number of passengers who have both checked-in for the serving flight leg AND have been accommodated with a boarding pass/seat assignment.  For post-departure, these same data elements represent the actual number of passengers on-board the serving flight leg (i.e., the total on-board or TLOB counts).</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:TotalCheckedInAndAcceptedDetail" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="Total" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>For pre-departure, this value represents the total number of passengers checked-in and accommodated with a boarding pass/seat assignment.  For post-departure, this total represents the actual number of passengers who boarded and were seated in this particular cabin class (i.e., the total on-board or TLOB counts).</xs:description>
+						<xs:example>9</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Capacity">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:CapacityBreakdown"/>
+			</xs:sequence>
+			<xs:attribute name="Total" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The physical capacity of the cabin class PRIOR to any reductions.  Note that this capacity expects that if moving curtain is present, this capacity reflects the current position of the curtain.</xs:description>
+						<xs:example>12</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CapacityBreakdown">
+		<xs:complexType>
+			<xs:attribute name="Authorized" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of passengers who are authorized to BOARD the cabin class.  This value is always less than or equal to the physical capacity.  If less, this authorized to board figure must be reduced by the number of crew rest, weight restricted, blocked, and "other" reserved seats.  This figure also represents the upper limit of the meal ordering forecast for that cabin.</xs:description>
+						<xs:example>9</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="CrewRest">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of seats in the cabin class that are blocked from passenger seating due to them being reserved for the officers and/or flight attendants.  This value is always less than or equal to the physical capacity.  Meal ordering will not consider these reserved seats in making its forecast.</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="WeightRestricted">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of seats in the cabin class that are blocked from passenger seating due to weight and balancing of the aircraft.  This value is always less than or equal to the physical capacity.  Meal ordering will not consider these reserved seats in making its forecast.</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="BlockedSeats">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of seats in the cabin class that are blocked from passenger seating due to group travelers, traffic rights, overbooked downline legs, or other reasons.  This value is always less than or equal to the physical capacity.  Meal ordering will not consider these reserved seats in making its forecast.</xs:description>
+						<xs:example>1</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Other">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The number of seats in the cabin class that are reserved for some reason OTHER than crew rest, weight restrictions or blocked seats.  This value is always less than or equal to the physical capacity.  Meal ordering will not consider these reserved seats in making its forecast.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TotalCheckedInAndAcceptedDetail">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>The breakdown of the number of passengers checked-in and accommodated with a boarding pass/seat assignment by passenger type and whether they are transit (thru) or locally boarded.  These data elements apply at both pre and post-departure.  The post-departure figures are the actual passengers on-board, separated by these types.  NOTE that this group of attributes is essentially the breakdown of the Total contained within TotalCheckedInAndAccepted.</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="LocalRevenueWithReservation">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of locally boarded passengers booked on this particular flight leg who have also checked-in for the flight and been assigned a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>6</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThruRevenueWithReservation">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of transit (thru) passengers booked on this particular flight leg who have also checked-in for the flight and been assigned a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="LocalRevenueStandby">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of locally boarded revenue standby passengers (including local GOSHO and NOREC) that were placed onto the wait/standby list and subsequently accommodated with a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThruRevenueStandby">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of transit (thru) revenue standby passengers (including thru GOSHO and NOREC) that were placed onto the wait/standby list and subsequently accommodated with a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="LocalNonRevenueStandby">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of locally boarded non-revenue standby passengers who were placed onto the wait/standby list and subsequently accommodated with a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThruNonRevenueStandby">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of transit (thru) non-revenue standby passengers who were placed onto the wait/standby list and subsequently accommodated with a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="LocalGoShow">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of locally boarded revenue standby passengers who were immediately accomodated with a boarding pass/seat assignment without being placed on the wait/standby list.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThruGoShow">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of transit (thru) revenue standby passengers who were immediately accomodated with a boarding pass/seat assignment without being placed on the wait/standby list.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="LocalPostiveSpace">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of locally boarded positive space passengers who have also checked-in for the flight and been assigned a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ThruPostiveSpace">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>Prior to departure, this figure represents the number of transit (thru) positive space passengers who have also checked-in for the flight and been assigned a boarding pass/seat assignment.  Post-departure, this figure represents the actual number of such passengers on-board the aircraft.</xs:description>
+						<xs:example>0</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SpecialMealInfo">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>This set of data shows the collection of all special meals that have been requested for this cabin class.</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:SpecialMeal" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SpecialMeal">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>Each special meal is contained within this element.</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPSI002:SpecialMealPassenger"/>
+				<xs:element ref="OPSI002:PreOrder" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="SpecialMealCode" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The 4-character special meal code associated with this request.  Typically these are IATA-standard values such as VGML.</xs:description>
+						<xs:example>LSML</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="SpecialMealComment">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The special meal comment associated with this request.  It is free form text that can be used to report any specific conditions.</xs:description>
+						<xs:example>This passenger has a nut allergy</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="SpecialMealSeat">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The seat number presently assigned to the passenger who requested this special meal.</xs:description>
+						<xs:example>10F</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SpecialMealPassenger">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>The passenger-specific details are contained within this element</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="FirstName">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The first name of the passenger requesting this special meal.</xs:description>
+						<xs:example>William</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="LastName">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description>The last name of the passenger requesting this special meal.</xs:description>
+						<xs:example>Hannigan</xs:example>
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PreOrder">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description>The information about pre-ordered meal for the passenger.</xs:description>
+				<xs:example/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ServiceSequenceNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							<xs:description>The service sequence number in which pre-ordered meal will be served.</xs:description>
+							<xs:example>1</xs:example>
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+							<xs:maxInclusive value="4"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SpecificationNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							<xs:description>The specification number of meal which will be served in the service.</xs:description>
+							<xs:example>53421</xs:example>
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

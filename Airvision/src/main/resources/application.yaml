@@ -1,0 +1,31 @@
+flightdetails:
+  uri:
+    mockuflifo: http://localhost:9092/uflifo
+    mockpaxcount: http://localhost:9092/paxCount
+    mockpreordermeals: http://localhost:9092/GetPreOrderMeals
+    mockspecialmealrequest: http://localhost:9092/specialmealrequest
+    oauthTokenV1: https://api.qa.aws.united.com/oauth2/v1/token
+    uflifoflightstatus: https://api.qa.aws.united.com/1.0/ods/uflifo/flightstatus/customer/status/lite/
+    sabrepreordermeals:  https://cateringpreorderqa.ual.com/pop/2.0/api/SabrePreOrderedProducts
+  oauth_credentials:
+    client_id: CateringOps-AirVision_UAL_8138D245-A5A1-4567-B3CD-0DF28DCAE5C2
+    client_secret: meREssP9DjSqGnLweNeRJU74
+    scope: "openid cateringops-airvision"
+    userType: guest
+  GetPreOrderDetails:
+    IncludeNonMealOptions: false
+spring:
+  jms:
+    listener:
+      auto-startup: true
+    jndi-name: QueueConnectionFactory
+    pubSubDomain: false
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+
+airvision:
+  queues:
+    flightdtlsreqqueue: UAL.OPS.AMOS.REQ.1
+    flightdtlsrespqueue: UAL.OPS.AMOS.RESP.1

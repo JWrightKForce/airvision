@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	 xmlns:tns="http://tns.tibco.com/bw/json/1572541052688"
+	 targetNamespace="http://tns.tibco.com/bw/json/1572541052688"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<complexType name="PreorderElementType">
+		<sequence>
+			<element name="CarrierCode" type="string" minOccurs="0"/>
+			<element name="FlightNumber" type="string" minOccurs="0"/>
+			<element name="DepartureAirport" type="string" minOccurs="0"/>
+			<element name="ArrivalAirport" type="string" minOccurs="0"/>
+			<element name="DepartureDate" type="string" minOccurs="0"/>
+			<element name="DepartureTime" type="string" minOccurs="0"/>
+			<element name="Errors" type="string" minOccurs="0"/>
+			<element name="Orders" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="CabinCodes" minOccurs="0" maxOccurs="unbounded">
+							<complexType>
+								<sequence>
+									<element name="CabinCode" type="string" minOccurs="0"/>
+									<element name="Travelers" minOccurs="0" maxOccurs="unbounded">
+										<complexType>
+											<sequence>
+												<element name="TravelerFlightRecordID" type="integer" minOccurs="0"/>
+												<element name="TravelerKey" type="string" minOccurs="0"/>
+												<element name="ConfirmationID" type="string" minOccurs="0"/>
+												<element name="GivenName" type="string" minOccurs="0"/>
+												<element name="SurName" type="string" minOccurs="0"/>
+												<element name="GivenNameNumber" type="string" minOccurs="0"/>
+												<element name="SurNameNumber" type="string" minOccurs="0"/>
+												<element name="TravelerNameIndex" type="string" minOccurs="0"/>
+												<element name="SSRCode" type="string" minOccurs="0"/>
+												<element name="SelectedMeals" minOccurs="0" maxOccurs="unbounded">
+													<complexType>
+														<sequence>
+															<element name="ServiceSeqNumber" type="integer" minOccurs="0"/>
+															<element name="MealCode" type="string" minOccurs="0"/>
+															<element name="Quantity" type="integer" minOccurs="0"/>
+															<element name="OrderChannelID" type="integer" minOccurs="0"/>
+															<element name="OrderChannel" type="string" minOccurs="0"/>
+															<element name="MealServiceCode" type="string" minOccurs="0"/>
+															<element name="UnitPrice" type="string" minOccurs="0"/>
+															<element name="OrderID" type="integer" minOccurs="0"/>
+															<element name="OrderDetailID" type="integer" minOccurs="0"/>
+															<element name="CurrencyCode" type="string" minOccurs="0"/>
+															<element name="MealDescription" type="string" minOccurs="0"/>
+															<element name="MealType" type="string" minOccurs="0"/>
+															<element name="OrderedDate" type="string" minOccurs="0"/>
+														</sequence>
+													</complexType>
+												</element>
+											</sequence>
+										</complexType>
+									</element>
+								</sequence>
+							</complexType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="ProcessTime" type="string" minOccurs="0"/>
+			<element name="TransactionDate" type="string" minOccurs="0"/>
+			<element name="MachineName" type="string" minOccurs="0"/>
+			<element name="TransactionRefID" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="PreorderElement" type="tns:PreorderElementType"/>
+</schema>
